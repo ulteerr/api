@@ -1,0 +1,23 @@
+version: '3.9'
+
+services:
+  nginx:
+    image: nginx
+    restart: always
+    volumes:
+      - ./:/var/www
+      - ./_docker/nginx/conf.d:/etc/nginx/conf.d
+    ports:
+      - 7735:80
+    depends_on:
+      - app
+    container_name: api_nginx
+
+  app:
+    build:
+      context: .
+      dockerfile: _docker/app/Dockerfile
+    volumes:
+      - ./:/var/www
+    container_name: api_app
+
